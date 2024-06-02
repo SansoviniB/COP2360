@@ -26,6 +26,7 @@ namespace Octopus
         {
             Octopus octopus1 = new Octopus();
 
+            //The user will enter the Octopus's name and where they live
             Console.Write("Enter the octopus's name: ");
             octopus1.Name = Console.ReadLine();
 
