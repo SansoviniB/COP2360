@@ -1,47 +1,53 @@
 ﻿using System;
 
-namespace Octopus
+namespace division
 {
-    class Octopus
+internal class Program
     {
-        public readonly int Legs;
-        public readonly int Eyes;
+        private static void Main(string[] args)
+        {
         
-        public string Species;
-        public string Location;
-        public string Name;
-
-        // Constructor to initialize the read-only fields and other properties
-        public Octopus()
-        {
-            Legs = 8;
-            Eyes = 2;
-            Species = "Blue-Ringed";
-        }
-    }
-
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            Octopus octopus1 = new Octopus();
-
-            //The user will enter the Octopus's name and where they live
-            Console.Write("Enter the octopus's name: ");
-            octopus1.Name = Console.ReadLine();
-
-            Console.Write("What ocean do they live in? ");
-            octopus1.Location = Console.ReadLine();
-
-            //Break in the console for better readability
-            Console.WriteLine();
-
-            // Output using string interpolation
-            Console.WriteLine($"{octopus1.Name} the octopus has {octopus1.Eyes} eyes and {octopus1.Legs} legs.");
-            Console.WriteLine($"{octopus1.Name} belongs to the {octopus1.Species} Octopus species.");
-            Console.WriteLine($"{octopus1.Name} the octopus can be found in the {octopus1.Location} ocean.");
+            Console.WriteLine("You will be entering two numbers, no greater than 1000.");
             
-            Console.ReadLine();
+            Console.WriteLine("Please enter the first number: ");
+            
+            string firstInput = Console.ReadLine();
+
+            Console.WriteLine("Please enter the second number: ");
+            string secondInput = Console.ReadLine();
+
+            try
+            {
+                int firstNum = Convert.ToInt32(firstInput);
+                int secondNum = Convert.ToInt32(secondInput);
+
+                 if (firstNum > 1000 || secondNum > 1000)
+                {
+                    throw new OverflowException("One or both of the numbers are greater than 1000.");
+                }
+
+                int answer = Division(firstNum, secondNum);
+                Console.WriteLine($"The answer of {firstNum} divided by {secondNum} is {answer}");
+            }
+            catch (FormatException ex)
+            {
+                Console.WriteLine("One or both inputs is not a number.");
+                Console.WriteLine($"More specifically, the issue is: {ex.Message}");
+            }
+            catch (DivideByZeroException ex)
+            {
+                Console.WriteLine("You can't divide by 0 unfortunately");
+                Console.WriteLine($"More specifically, the issue is: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("There was an error that caused the program to fail.");
+                Console.WriteLine($"More specifically, the issue is: {ex.Message}");
+            }
         }
+
+        static int Division (int num1, int num2){
+            return num1 / num2;
+        } 
     }
 }
