@@ -1,53 +1,65 @@
-﻿using System;
+﻿using System; // Importing the System namespace for basic functionality
+using System.Collections.Generic; // Importing the namespace for using collections like Dictionary and List
 
-namespace division
+class Program
 {
-internal class Program
+    // Dictionary to store MLB teams and their details
+    static Dictionary<string, List<string>> mlbTeams = new Dictionary<string, List<string>>();
+
+    // Method to populate the dictionary with MLB teams and their details
+    static void PopulateDictionary()
     {
-        private static void Main(string[] args)
+        mlbTeams["Boston Red Sox"] = new List<string> { "Fenway Park", "David Ortiz", "Mookie Betts" };
+        mlbTeams["New York Yankees"] = new List<string> { "Yankee Stadium", "Derek Jeter", "Aaron Judge" };
+        mlbTeams["Houston Astros"] = new List<string> { "Minute Maid Park", "Jose Altuve", "George Springer" };
+    }
+
+    // Method to display the contents of the dictionary
+    static void DisplayDictionaryContents()
+    {
+        // Iterate through each team in the dictionary
+        foreach (var team in mlbTeams)
         {
-        
-            Console.WriteLine("You will be entering two numbers, no greater than 1000.");
-            
-            Console.WriteLine("Please enter the first number: ");
-            
-            string firstInput = Console.ReadLine();
-
-            Console.WriteLine("Please enter the second number: ");
-            string secondInput = Console.ReadLine();
-
-            try
+            // Print the team name
+            Console.WriteLine($"Team: {team.Key}");
+            Console.WriteLine("Details:");
+            // Iterate through each detail of the team and print it
+            foreach (var detail in team.Value)
             {
-                int firstNum = Convert.ToInt32(firstInput);
-                int secondNum = Convert.ToInt32(secondInput);
-
-                 if (firstNum > 1000 || secondNum > 1000)
-                {
-                    throw new OverflowException("One or both of the numbers are greater than 1000.");
-                }
-
-                int answer = Division(firstNum, secondNum);
-                Console.WriteLine($"The answer of {firstNum} divided by {secondNum} is {answer}");
+                Console.WriteLine($"- {detail}");
             }
-            catch (FormatException ex)
-            {
-                Console.WriteLine("One or both inputs is not a number.");
-                Console.WriteLine($"More specifically, the issue is: {ex.Message}");
-            }
-            catch (DivideByZeroException ex)
-            {
-                Console.WriteLine("You can't divide by 0 unfortunately");
-                Console.WriteLine($"More specifically, the issue is: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("There was an error that caused the program to fail.");
-                Console.WriteLine($"More specifically, the issue is: {ex.Message}");
-            }
+            Console.WriteLine(); // Print a blank line for better readability
         }
+    }
 
-        static int Division (int num1, int num2){
-            return num1 / num2;
-        } 
+    // Method to remove a key
+    static void RemoveTeam(string teamName)
+    {
+        if (mlbTeams.ContainsKey(teamName))
+        {
+            mlbTeams.Remove(teamName);
+            Console.WriteLine($"The team '{teamName}' has been removed.");
+        }
+        else
+        {
+            Console.WriteLine($"The team '{teamName}' was not found in the dictionary.");
+            Console.WriteLine($"Please enter the correct team name you wish to remove.");
+            teamName = Console.ReadLine();
+            RemoveTeam(teamName);
+        }
+    }
+
+    // The start of the program
+    static void Main(string[] args)
+    {
+        PopulateDictionary(); // Call the method to populate the dictionary with MLB teams and their details
+        DisplayDictionaryContents(); // Call the method to display the contents of the dictionary
+
+        // Call the method to remove the team name and display the dictionary again
+        Console.WriteLine("Please enter the team name that you wish to remove: ");
+        string teamName = Console.ReadLine();
+        RemoveTeam(teamName);
+        DisplayDictionaryContents();
     }
 }
+
